@@ -1,0 +1,29 @@
+{
+  "name": "blog-api",
+  "version": "1.0.0",
+  "description": "API para gestionar blogs",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/.",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "author": "Federico Gomez Conde",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "8.49.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.28.1",
+    "faker": "6.6.6",
+    "nodemon": "3.0.1"
+  },
+  "dependencies": {
+    "bcrypt": "5.1.1",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "7.5.1"
+  }
+}

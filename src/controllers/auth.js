@@ -5,6 +5,7 @@ const register = async (req, res) => {
   try {
     let { firstname, lastname, email, password } = req.body
     const newUser = new UserModel({ firstname, lastname, email, password, admin: false, activo: true });
+    // la contraseña se hashea antes de crear el modelo (pre-save)
     const user = await newUser.save()
 
     const userResponse = {
@@ -24,14 +25,14 @@ const login = async (req, res) => {
   try {
     let { email, password } = req.body
 
-    const user = await UserModel.findOne({ email: email }).select('_id nombre password admin')
+    const user = await UserModel.findOne({ email: email }).select('_id email password')
     if (!user) return res.status(401).json({ msj: "Credenciales inválidas" });
 
     let logged = await user.comparePassword(password)
     if (!logged) return res.status(401).json({ msj: "Credenciales inválidas" });
 
     const token = jwt.sign(
-      { nombre: user.nombre, id: user._id, admin: user.admin },
+      { email: user.email, id: user._id },
       process.env.TOKEN_SECRET)
 
     return res.status(200).json({ msj: "login exitoso", token });

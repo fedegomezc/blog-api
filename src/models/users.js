@@ -20,6 +20,10 @@ usersSchema.pre('save', async function(next) {
   next();
 })
 
+usersSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
 const blogSchema = new mongoose.Schema({
   titulo: String,
   descripcion: String,

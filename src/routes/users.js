@@ -5,6 +5,6 @@ import userController from '../controllers/users.js';
 const usersRouter = Router();
 
 // usersRouter.use(logged);
-usersRouter.get('/', userController.getBlogs);
+usersRouter.get('/blogs', userController.getBlogs);
 
 export default usersRouter;

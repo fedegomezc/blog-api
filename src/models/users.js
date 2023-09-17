@@ -15,8 +15,8 @@ usersSchema.pre('save', async function(next) {
   let user = this;
 
   const salt = await bcrypt.genSaltSync(parseInt(process.env.SALT_ROUNDS));
-  const passwordHashed = await bcrypt.hash(user.password, salt);
-  user.password = passwordHashed;
+  const hashedPassword = await bcrypt.hash(user.password, salt);
+  user.password = hashedPassword;
   next();
 })
 

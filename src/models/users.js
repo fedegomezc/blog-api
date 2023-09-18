@@ -25,9 +25,9 @@ usersSchema.methods.comparePassword = async function (password) {
 };
 
 const blogSchema = new mongoose.Schema({
-  titulo: String,
-  descripcion: String,
-  imagen: String,
+  title: String,
+  description: String,
+  image: String,
   activo: Boolean,
 }, {timestamps: true});
 

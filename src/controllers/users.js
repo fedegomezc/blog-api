@@ -1,4 +1,4 @@
-import { UserModel } from '../models/users.js';
+import { BlogModel, UserModel } from '../models/users.js';
 
 const profile = async (req, res) => {
   try {
@@ -9,4 +9,18 @@ const profile = async (req, res) => {
   }
 }
 
-export default { profile };
+const createBlog = async (req, res) => {
+  try {
+    const newBlog = new BlogModel(req.body);
+    const blog = await newBlog.save();
+    
+    await UserModel.findByIdAndUpdate(req.user.id, { $push: { blogs: blog._id } });
+
+    res.status(201).json({ msj: 'El blog ha sido creado', blog });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al crear el blog' });
+  }
+}
+
+export default { profile, createBlog };

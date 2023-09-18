@@ -4,7 +4,7 @@ import logged from '../middleware/logged.js';
 
 const usersRouter = Router();
 
-usersRouter.use(logged);
-usersRouter.get('/profile', userController.profile);
+usersRouter.get('/profile', logged, userController.profile);
+usersRouter.post('/blogs', logged, userController.createBlog)
 
 export default usersRouter;

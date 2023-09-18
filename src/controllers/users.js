@@ -50,4 +50,22 @@ const editBlog = async (req, res) => {
   }
 }
 
-export default { profile, createBlog, editBlog };
+const deleteBlog = async (req, res) => {
+  try {
+    const { blogId } = req.params;
+
+    const deletedBlog = await BlogModel.findByIdAndRemove(blogId);
+    if (!deletedBlog) {
+      return res.status(404).json({ msj: 'Blog no encontrado' });
+    }
+
+    await UserModel.findByIdAndUpdate(req.user.id, { $pull: { blogs: blogId } });
+
+    return res.status(200).json({ msj: 'Blog eliminado' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ msj: 'Error inesperado' });
+  }
+}
+
+export default { profile, createBlog, editBlog, deleteBlog };

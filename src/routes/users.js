@@ -4,9 +4,11 @@ import logged from '../middleware/logged.js';
 
 const usersRouter = Router();
 
-usersRouter.get('/profile', logged, userController.profile);
-usersRouter.post('/blogs', logged, userController.createBlog);
-usersRouter.put('/blogs/edit/:blogId', logged, userController.editBlog);
+usersRouter.use(logged);
+usersRouter.get('/profile', userController.profile);
+usersRouter.post('/blogs', userController.createBlog);
+usersRouter.put('/blogs/:blogId', userController.editBlog);
+usersRouter.delete('/blogs/:blogId', userController.deleteBlog)
 
 
 export default usersRouter;

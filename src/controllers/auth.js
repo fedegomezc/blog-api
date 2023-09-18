@@ -4,7 +4,14 @@ import jwt from 'jsonwebtoken';
 const register = async (req, res) => {
   try {
     let { firstname, lastname, email, password } = req.body
-    const newUser = new UserModel({ firstname, lastname, email, password, admin: false, activo: true });
+    const newUser = new UserModel({
+      firstname, 
+      lastname, 
+      email, 
+      password, 
+      admin: false, 
+      activo: true 
+    });
     // la contraseña se hashea antes de crear el modelo (pre-save)
     const user = await newUser.save()
 

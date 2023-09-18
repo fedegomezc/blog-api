@@ -8,7 +8,7 @@ const usersSchema = new mongoose.Schema({
   password: { type: String, required: true, select: false },
   admin: Boolean,
   activo: Boolean,
-  blogs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Blog' }],
+  blogs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'blogs' }],
 }, {timestamps: true});
 
 usersSchema.pre('save', async function(next) {
@@ -24,12 +24,14 @@ usersSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-const blogSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  image: String,
-  activo: Boolean,
-}, {timestamps: true});
+usersSchema.set('toJSON', {
+  transform: function (doc, ret) {
+    delete ret.admin;
+    delete ret.activo;
+    delete ret.createdAt;
+    delete ret.updatedAt;
+    delete ret.__v;
+  }
+})
 
 export const UserModel = mongoose.model('users', usersSchema);
-export const BlogModel = mongoose.model('blogs', blogSchema);

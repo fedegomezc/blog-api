@@ -1,10 +1,12 @@
-import { BlogModel, UserModel } from '../models/users.js';
+import { UserModel } from '../models/users.js';
+import { BlogModel } from '../models/blogs.js';
 
 const profile = async (req, res) => {
   try {
-    const user = await UserModel.findOne({ _id: req.user.id });
-    return res.status(200).json({ msj: "todos los blogs", user });
+    const user = await UserModel.findOne({ _id: req.user.id }).populate('blogs');
+    return res.status(200).json({ msj: "devuelvo el usuario", user });
   } catch (error) {
+    console.error(error)
     return res.status(500).json({ msj: "error inesperado" });
   }
 }

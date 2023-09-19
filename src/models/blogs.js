@@ -5,14 +5,20 @@ const blogsSchema = new mongoose.Schema({
   description: String,
   image: String,
   activo: Boolean,
-}, {timestamps: true});
+}, { timestamps: true });
 
 blogsSchema.set('toJSON', {
   transform: function (doc, ret) {
-    delete ret.activo;
-    delete ret.createdAt;
-    delete ret.updatedAt;
-    delete ret.__v;
+    if (!ret.activo) {
+      return { 
+        id: ret._id,
+        msj: 'Esta publicación está desactivada por el administrador' };
+    } else {
+      delete ret.activo;
+      delete ret.createdAt;
+      delete ret.updatedAt;
+      delete ret.__v;
+    }
   }
 })
 

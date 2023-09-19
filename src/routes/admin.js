@@ -10,5 +10,6 @@ adminRouter.use(isAdmin);
 
 adminRouter.get('/', adminController.get);
 adminRouter.put('/disable/:userId', adminController.disableUser)
+adminRouter.put('/disableBlog/:blogId', adminController.disableBlog)
 
 export default adminRouter;

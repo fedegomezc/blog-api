@@ -1,3 +1,4 @@
+import { BlogModel } from '../models/blogs.js';
 import { UserModel } from '../models/users.js';
 
 const get = async (req, res) => {
@@ -11,7 +12,6 @@ const get = async (req, res) => {
 const disableUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    console.log(userId);
 
     await UserModel.findByIdAndUpdate(userId, { activo: false });
     return res.status(200).json({ msj: 'Usuario desactivado' });
@@ -21,4 +21,16 @@ const disableUser = async (req, res) => {
   }
 }
 
-export default { get, disableUser }
+const disableBlog = async (req, res) => {
+  try {
+    const { blogId } = req.params;
+
+    await BlogModel.findByIdAndUpdate(blogId, { activo: false });
+    return res.status(200).json({ msj: 'Blog desactivado' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ msj: 'Error inesperado' });
+  }
+}
+
+export default { get, disableUser, disableBlog }

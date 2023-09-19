@@ -9,7 +9,8 @@ const logged = async (req, res, next) => {
     const token = bearerToken.split(' ')[1];
     const user = await decodedToken(token);
 
-    if (!user.id) return res.status(401).json({ msj: "Credenciales inválidas2" });
+    if (!user.id) return res.status(401).json({ msj: "Credenciales inválidas" });
+    if(!user.activo) return res.status(401).json({ msj: 'El usuario se encuentra desactivado' });
 
     req.user = user;
     next()

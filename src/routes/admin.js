@@ -9,5 +9,6 @@ adminRouter.use(logged);
 adminRouter.use(isAdmin);
 
 adminRouter.get('/', adminController.get);
+adminRouter.put('/disable/:userId', adminController.disableUser)
 
 export default adminRouter;

@@ -32,14 +32,14 @@ const login = async (req, res) => {
   try {
     let { email, password } = req.body
 
-    const user = await UserModel.findOne({ email }).select('_id email password admin')
+    const user = await UserModel.findOne({ email }).select('_id email password admin activo')
     if (!user) return res.status(401).json({ msj: "Credenciales inválidas" });
 
     let logged = await user.comparePassword(password)
     if (!logged) return res.status(401).json({ msj: "Credenciales inválidas" });
 
     const token = jwt.sign(
-      { id: user._id, admin: user.admin },
+      { id: user._id, admin: user.admin, activo: user.activo },
       process.env.TOKEN_SECRET)
 
     return res.status(200).json({ msj: "login exitoso", token });
